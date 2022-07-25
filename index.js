@@ -11,20 +11,14 @@ import cors from "cors"
 const app = express()
 dotenv.config()
 
-// const connect = async()=>{
-//     try{
-//         await mongoose.connect(process.env.MONGO);
-//         console.log("Connect to mongoDB.")
-//     }catch(error){
-//         throw error;
-//     }
-// }
-
-mongoose
-.connect(process.env.MONGO)
-.then(()=> console.log("DB Connection Successfull")).catch((err)=>{
-    console.log(err);
-})
+const connect = async()=>{
+    try{
+        await mongoose.connect(process.env.MONGO);
+        console.log("Connect to mongoDB.")
+    }catch(error){
+        throw error;
+    }
+}
 
 mongoose.connection.on("disconnected", ()=>{
     console.log("mongoDB disconnected !")
@@ -58,7 +52,7 @@ app.get('/',(req, res)=>{
     res.send("hello to booking-hotel API")
 } )
 
-app.listen(process.env.PORT || 8800, ()=>{
+app.listen(process.env.PORT ||8800, ()=>{
     connect()
     console.log("connect to backend.")
 })
